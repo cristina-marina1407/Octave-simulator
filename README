@@ -1,0 +1,132 @@
+#### Postelnicu Cristina-Marina 313CA
+
+    Programul efectueaza operatii cu matrice stocate intr un vector, toate
+acestea fiind alocate dinamic. Fiecare operatie este reprezentata printr o
+litera introdusa de la tastaura, urmata de parametri necesari.
+    Pentru a realiza acest lucru am folosit in functia main un switch care
+contine aceste litere si apeleaza functiile necesare. Daca se introduce o
+litera necunoscuta, se afiseaza mesajul "Unrecognized command". Acest switch
+se regaseste intr un while pentru a putea introduce o litera noua dupa ce s a
+efectuat o operatie. Daca se introduce litera Q programul se sfarseste si se
+elibereaza toate resursele prin functia free_resources care primeste ca 
+parametrii vectorul de matrice, vectorul care contine numarul de linii
+pentru fiecare matrice si vectorul care contine numarul de coloane pentru
+fiecare matrice. Folosind functia free se elibereaza pe rand memoria pentru
+fiecare matrice incarcata.
+    Functia main contine, de asemenea, alocarea dinamica a vectorului de
+matrice pentru un singur element, urmand sa fie actualizat, si a vectorilor
+pentru linii si coloane, vm si vn.
+    Comanda "L":
+    Comanda "L" reprezinta incarcarea in memorie a unei matrice. Pentru aceasta
+am construit functiile read_matrix, de tip int, si functia add_matrix, de tip
+void. Functia read_matrix aloca dinamic memorie pentru o matrice si apoi o
+citeste. Aceasta primeste ca parametri numarul de linii si de coloane ale unei
+matrice. Functia add_matrix are rolul de a adauga o matrice alocata si citita
+cu functia read_matrix la finalul vectorului de matrice. Aceasta primeste ca
+parametri vectorul de matrice, vectorul de linii, vectorul de coloane, marimea
+maxima a vectorului si numarul matricei introduse, toate acestea fiind 
+pointeri. La inceputul functiei se realoca memorie pentru vectorul de matrice
+si pentru vectorii de linii si coloane, dupa care se actualizeaza capacitatea
+vectorului notata maxsize. Se apleaza functia de citire, dupa care se adauga
+matricea si dimensiunile ei in vectori. La final se incrementeaza pointerul
+poz care reprezinta numarul de matrice, incepand de la 0.
+    Comanda "D":
+    Comanda "D" afiseaza numarul de linii si de coloane ale unei matrice
+cu indexul dat. Se citeste de la tastatura indexul, dupa care se verifica
+daca valoarea acestuia este pozitiva si daca matricea cu acest index exista,
+adica daca indexul este mai mic decat poz, numarul de matrice. Dupa aceasta
+verificare se printeaza elementele din vectorii vm si vn corespunzatori
+indexului.
+    Comanda "P":
+    Comanda "P" afiseaza matricea aflata pe pozitia introdusa de la
+tastatura. Pentru aceasta am construit functia print_matrix care are in antet
+vectorul de matrice v, vectorii pentru linii si coloane vm si vn si poz.
+Se citeste indexul, se efectueaza verificarea acestuia si se afiseaza elemetele
+matricei folosind 2 for uri pana la numarul de linii si de coloane care se afla
+in vectorii vm si vn ((*vm)[index] si (*vn)[index]).
+    Comanda "C":
+    Comada "C" reprezinta redimensionarea in place a unei matrice din vector.
+Pentru aceasta am construit functia redimensionare_matrix care are in antet
+vectorul de matrice, vectorii vm si vn si poz. Se citeste indexul matricei,
+se verifica prin comparatie cu 0 si cu poz, se citesc numarul de linii dupa
+redimensionare, numarul de coloane dupa redimensionare si liniile si coloanele
+din matricea originala care urmeaza sa fie intersectate. In functia creata
+am alocat memorie pentru un vector care contine liniile si pentru un vector
+care contine liniile, dupa care am alocat memorie pentru matricea noua pe care
+am numit o r. Matricea r primeste elementele aflate la intersectia dintre
+liniile si coloanele matricei originale. Aceste elemente sunt parcurse cu
+2 for uri pana la numarul nou de linii si coloane (l si c) si sunt reprezentate
+de (*v)[index][lin][col]. Dupa ce se formeaza matricea r, se elibereaza memoria
+alocata pentru matricea originala si se inlocuieste (*v)[index] cu r. De
+asemenea, se actualizeaza numarul de linii si de coloane cu l si c.
+    Comanda "M":
+    Comanda "M" reprezinta inmultirea a doua mtrice cu indexul dat si
+adaugarea rezultatului la finalul vectorului. Pentru aceasta am folosit 2
+functii multiply1 si add_m_matrix. Functia multiply1 are in antet vectorul
+de matrice, vectorul liniilor, vectorul coloanelor si indexul celor
+doua matrice. Pentru a efectua inmultirea se aloca memorie matricei m,
+dupa care se initializeaza elementele acestei matrice cu 0. Se parcurg 
+cele doua matrice folosind 3 for uri, deoarece exista 3 dimensiuni diferite
+numarul de linii al primei matrice, numarul de coloane al acesteia care 
+trebuie sa fie egal cu numarul de linii al celei de a doua matrice si numarul
+de coloane al acesteia. Dupa inmultire se efectueaza operatia m[i][j] % 10007
+pentru a se evita eventuale probleme de overflow. Daca elementele sunt negative
+se efectueaza adunarea cu acelasi numar. Functia returneaza matricea m.
+Cea de a doua functie add_m_matrix adauga matricea m, obtinuta prin apelarea
+functiei anterioare, la finalul vectorului. In aceasta functie se verifica
+daca dimensiunile celor doua matrice sunt compatibile pentru operatia de
+inmultire. Astfel, se realoca memorie pentru vectorii v, vm si vn si se cresc
+poz si maxsize, numarul de matrice si capacitatea maxima a vectorului.
+Se adauga matricea m pe urmatoarea pozitie, se adauga numarul de linii al
+primei matrice in vectorul de linii si numarul de coloane al celei de a doua in
+vectorul de coloane.
+    Comanda "O":
+    Comada "O" reprezinta sortarea matricelor din vector in functie de suma
+elementelor unei matrice. Pentru a efectua aceasta operatie am construit 2
+functii suma_elem si sort_matrix. Functia suma_elem calculeaza suma elementelor
+unei matrice oarecare, avand in antet numarul de linii, de coloane si matricea
+declarata ca pointer. Functia sort_matrix foloseste algoritmul bubble_sort
+pentru a sorta matricele. Se calculeaza sumele elementelor matricelor si
+se efcetueaza operatiile de %10007 si de adunare cu 10007 in caz negativ. Daca
+suma primei matrice este mai mica decat suma urmatoatrei matrice din vector,
+atunci acestea isi schimba locul, schimbandu se de asemenea liniile si
+coloanele din vectorii vm si vn. Astefel se ordoneaza elementele din vectorul
+v si in functie de aceasta se ordoneaza si vectorii vm si vn.
+    Comanda "T":
+    Comanda "T" reprezinta transpunerea unei matrice din vectorul de matrice.
+Pentru aceasta comanda am construit functia transpunere_matrix care are in 
+antet vectorul de matrice, vectorul liniilor, vectorul coloanelor si poz.
+Se citeste indexul matricei, dupa care se aloca memorie pentru matricea t,
+se schimba locul liniilor cu cel al coloanelor prin 2 for uri si apoi
+se elibereaza memoria matricei initiale pentru ca aceasta sa fie inlocuita
+cu matricea transpusa. Se schimba numarul de linii de la (*vm)[index] cu cel al
+coloanlor si invers pentru numarul de coloane. 
+    Comanda "R":
+    Comanda "R" reprezinta ridicarea la putere a unei matrice din vector in
+timp logaritmic. Pentru aceasta am folosit 2 functii, multiply2 si
+ridicare_matrix. Functia multiply2 inmulteste 2 matrice oarecare si efectueaza
+operatia %10007 si adunarea in caz negativ. Aceasta nu are nevoie de index pt
+a efectua operatia de inmultire. Functia ridicare_matrix are in antet vectorul
+de matrice, vectorii pentru linii si coloane si poz. La inceput aceasta
+verifica daca indexul matricei, verifica daca puterea introdusa este pozitiva
+si daca matricea este patratica. Daca sunt indeplinite aceste conditii, se
+aloca memorie pentru matricea p. Aceasta este intializata cu matricea In,
+astefl daca puterea este 0, matricea ridicarii va fi In. Daca puterea este
+diferita de 0, verificam daca aceasta este para sau impara. Daca puterea este
+impara se aloca memorie pentru p1 care este rezultatul inmultirii dintre p si 
+matricea cu indexul dat, rezultat obtinut prin functia multiply2. Se elibereaza
+memoria pentru p si se actualizeaza valoarea acestuia cu p1. Daca puterea este
+para se efectueaza inmultirea dintre matricea cu indexul dat si ea insasi,
+folosind functia multiply1, avand indexul. Rezultatul acestei inmultiri este
+pus in aux, dupa care se elibereaza memoria lui (*v)[index] si se actualizeaza
+matricea din vector cu aux. La finalul instructiunii while se injumatateste 
+puterea si se continua procesul pana cand aceasta devine 0. In final se schimba
+valoarea matricei din vector cu matricea p, aceasta fiind rezultatul ridicarii
+la putere.
+    Comanda "F":
+    Comanda "F" reprezinta stergerea unei matrice cu indexul dat. Pentru
+aceasta operatie am construit functia free_matrix care are in antet vectorul
+v, vectorii pentru linii si coloane si poz. Dupa ce se citeste indexul,
+se elibereaza memoria alocata acestei matrice, se muta toate elementele
+vectorului spre stanga, aceasta operatie se realizeaza si in vectorii pentru
+linii si coloane si apoi pozitia initiala devine 0.
