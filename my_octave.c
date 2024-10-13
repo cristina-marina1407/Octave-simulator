@@ -1,4 +1,4 @@
-//Postelnicu Cristina-Marina 313CA
+//Copyright Postelnicu Cristina-Marina 313CA
 #include <stdio.h>
 #include <stdlib.h>
 
